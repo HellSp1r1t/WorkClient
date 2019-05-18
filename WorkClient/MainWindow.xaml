@@ -1,0 +1,32 @@
+﻿<Window x:Class="WorkClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkClient"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="450" Width="668.712">
+    <Grid OpacityMask="Black" Background="#FFFDFDFD">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="allUsersButton" Content="Все пользователи" HorizontalAlignment="Left" Margin="463,371,0,0" VerticalAlignment="Top" Width="107" Click="UsersButtonClick"/>
+
+        <Button x:Name="AddUserButton" Content="Добавить пользователя" HorizontalAlignment="Left" Margin="447,336,0,0" VerticalAlignment="Top" Width="145" Click="AddUserClick"/>
+
+        <Button x:Name="Delete" Content="Удалить" HorizontalAlignment="Left" Margin="479,202,0,0" VerticalAlignment="Top" Width="75" Click="DeleteFile"/>
+
+        <Button x:Name="Edit" Content="Изменить" HorizontalAlignment="Left" Margin="479,167,0,0" VerticalAlignment="Top" Width="75" Click="EditFile"/>
+        <Button x:Name="Read" Content="Открыть" HorizontalAlignment="Left" Margin="479,129,0,0" VerticalAlignment="Top" Width="75" Click="ReadFile"/>
+        <Button x:Name="Add" Content="Добавить" HorizontalAlignment="Left" Margin="479,93,0,0" VerticalAlignment="Top" Width="75" Click="AddFile" Visibility="Visible"/>
+        <ListBox x:Name="fileList" HorizontalAlignment="Left" Height="399" Margin="34,10,0,0" VerticalAlignment="Top" Width="238" ScrollViewer.CanContentScroll="False"/>
+
+        <Label x:Name="backgroundUI" Content="" Background="#FFD16767" Visibility="Visible"/>
+        <TextBox x:Name="LoginBox" HorizontalAlignment="Left" Height="23" Margin="252,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.978,0.522"/>
+        <Label x:Name="LableLogin" Content="Логин" HorizontalAlignment="Left" Margin="252,118,0,0" VerticalAlignment="Top" Width="74"/>
+        <Label x:Name="LablePass" Content="Пароль" HorizontalAlignment="Left" Margin="252,167,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="PassBox" HorizontalAlignment="Left" Margin="252,193,0,0" VerticalAlignment="Top" Width="120" Height="24"/>
+        <Button x:Name="ButtonConnect" Content="Войти" HorizontalAlignment="Left" Margin="272,233,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
+    </Grid>
+</Window>

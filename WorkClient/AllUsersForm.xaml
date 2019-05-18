@@ -1,0 +1,14 @@
+﻿<Window x:Name="AllUsers" x:Class="WorkClient.AllUsersForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkClient"
+        mc:Ignorable="d"
+        Title="Список пользователей" Height="446.322" Width="481.199">
+    <Grid>
+        <ListBox x:Name="usersList" HorizontalAlignment="Left" Height="348" Margin="27,38,0,0" VerticalAlignment="Top" Width="212"/>
+        <Button x:Name="editUserButton" Content="Редактровать" HorizontalAlignment="Left" Margin="316,70,0,0" VerticalAlignment="Top" Width="85"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,16 @@
+﻿<Window x:Class="WorkClient.AddFileForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkClient"
+        mc:Ignorable="d"
+        Title="Добавление файла" Height="535.831" Width="849.046">
+    <Grid>
+        <TextBox x:Name="NameFileBox" HorizontalAlignment="Left" Height="23" Margin="30,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" SpellCheck.IsEnabled="True"/>
+        <Button x:Name="AddNewFileButton" Content="Добавить" HorizontalAlignment="Left" Margin="695,139,0,0" VerticalAlignment="Top" Width="95" Click="AddFileButton"/>
+        <TextBox x:Name="BodyFileBox" HorizontalAlignment="Left" Height="365" Margin="30,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="627"/>
+        <Label Content="Имя Файла" HorizontalAlignment="Left" Margin="30,29,0,0" VerticalAlignment="Top"/>
+        <Label Content="Текст" HorizontalAlignment="Left" Margin="30,88,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
