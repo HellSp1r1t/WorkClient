@@ -35,7 +35,6 @@ namespace WorkClient
             string newPass = PassTextBox.Text;
 
             MainWindow.ParametrsClass parametrsClass = new MainWindow.ParametrsClass();
-            parametrsClass.userName = mainWindow.userName;
             parametrsClass.operation = "addUser";
             parametrsClass.userName = mainWindow.userName;
             parametrsClass.answer = "login:" + newLogin + "/" + "password:" + newPass; 
