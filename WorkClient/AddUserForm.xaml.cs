@@ -33,7 +33,14 @@ namespace WorkClient
         {
             string newLogin = LoginTextBox.Text;
             string newPass = PassTextBox.Text;
-            mainWindow.sendMessageToServer("addUser/" + newLogin + "|" + newPass);
+
+            MainWindow.ParametrsClass parametrsClass = new MainWindow.ParametrsClass();
+            parametrsClass.userName = mainWindow.userName;
+            parametrsClass.operation = "addUser";
+            parametrsClass.userName = mainWindow.userName;
+            parametrsClass.answer = "login:" + newLogin + "/" + "password:" + newPass; 
+
+            mainWindow.sendMessageToServer(mainWindow.JsonEncode(parametrsClass));
 
             this.Close();
         }

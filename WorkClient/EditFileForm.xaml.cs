@@ -31,8 +31,14 @@ namespace WorkClient
         private void saveEditFile(object sender, RoutedEventArgs e)
         {
             string FinalBodyFile = bodyText.Text;
-            mainWindow.sendMessageToServer("finalEditFiles/" + FinalBodyFile + "|" + nameFile);
 
+            MainWindow.ParametrsClass parametrsClass = new MainWindow.ParametrsClass();
+            parametrsClass.userName = mainWindow.userName;
+            parametrsClass.operation = "addOrEditFile";
+            parametrsClass.fileName = nameFile;
+            parametrsClass.fileBody = FinalBodyFile;
+
+            mainWindow.sendMessageToServer(mainWindow.JsonEncode(parametrsClass));
             this.Close();
         }
     }

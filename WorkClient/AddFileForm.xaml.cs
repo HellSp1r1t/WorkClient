@@ -37,8 +37,13 @@ namespace WorkClient
             string nameFile = NameFileBox.Text;
             string bodyFile = BodyFileBox.Text;
 
-            mainWindow.sendMessageToServer("addFile/data:" + nameFile + "|" + bodyFile);
-            mainWindow.sendMessageToServer("loadFiles/" + nameFile);
+            MainWindow.ParametrsClass parametrsClass = new MainWindow.ParametrsClass();
+            parametrsClass.userName = mainWindow.userName;
+            parametrsClass.operation = "addOrEditFile";
+            parametrsClass.fileName = nameFile;
+            parametrsClass.fileBody = bodyFile;
+
+            mainWindow.sendMessageToServer(mainWindow.JsonEncode(parametrsClass));
 
             this.Close();
         }

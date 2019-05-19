@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
-using System.IO;
-
+using Newtonsoft.Json;
+using System;
 
 namespace WorkClient
 {
@@ -26,6 +15,7 @@ namespace WorkClient
     {
         const string ip = "127.0.0.1";
         const int port = 8080;
+        public string userName = "";
 
 
         public MainWindow()
@@ -38,9 +28,16 @@ namespace WorkClient
         {
             string login = LoginBox.Text;
             string pass = PassBox.Password;
-            sendMessageToServer("Connect/" + login + "/" + pass);
+
+            ParametrsClass parametrsClass = new ParametrsClass();
+            parametrsClass.userName = login;
+            parametrsClass.userPass = pass;
+            parametrsClass.operation = "Connect";
+
+            sendMessageToServer(JsonEncode(parametrsClass));
 
         }
+        //Скрыть интефейс входа
         public void hideUILogin(bool visible) {
             if (visible)
             {
@@ -82,50 +79,44 @@ namespace WorkClient
             while (tcpSocket.Available > 0);
 
             string[] answerFromServer = answer.ToString().Split('/');
+            ParametrsClass receivedData = JsonConvert.DeserializeObject<ParametrsClass>(answer.ToString());
 
-            switch (answerFromServer[0].Split(':')[0]) {
+            switch (receivedData.operation) {
                 case "authentication":
-                    if (answerFromServer[0].Split(':')[1] == "true")
+                    if (Convert.ToBoolean(receivedData.authentication))
                     {
-                       hideUILogin(true);
-                        string[] listElements = answerFromServer[1].Split(':')[1].Split(',');
-                        for (int i = 0; i < listElements.Length; i++)
-                        {
-                           fileList.Items.Insert(i, listElements[i]);
-                        }
+                        hideUILogin(true);
+                        userName = receivedData.userName;
                     }
-                    else if (answerFromServer[0].Split(':')[1] == "false")
+                    else
                     {
                         MessageBox.Show("Неправильный логин или пароль");
                     }
                     break;
                 case "bodyFile":
-                    ReadFileForm readFileForm = new ReadFileForm(answerFromServer[1]);
+                    ReadFileForm readFileForm = new ReadFileForm(receivedData.fileBody);
                     readFileForm.Show();
                     break;
                 case "fileDeleted":
+
                     break;
                 case "bodyEditFile":
-                    EditFileForm editFileFrom = new EditFileForm(answerFromServer[1]);
+                    EditFileForm editFileFrom = new EditFileForm(receivedData.fileBody);
                     editFileFrom.mainWindow = this;
-                    editFileFrom.nameFile = answerFromServer[2];
+                    editFileFrom.nameFile = receivedData.fileName;
                     editFileFrom.Show();
                     break;
                 case "filesList":
-                    string[] elements = answerFromServer[1].Split(':')[1].Split(',');
-                   fileList.Items.Clear();
-                    for (int i = 0; i < elements.Length; i++)
-                    {
-                        fileList.Items.Insert(i, elements[i]);
-                    }
+
                     break;
                 case "userAdded":
-                    MessageBox.Show("Пользователь успешно создан");
+                    if (Convert.ToBoolean(receivedData) == true)
+                    {
+                        MessageBox.Show("Пользователь успешно создан");
+                    }
                     break;
                 case "usersList":
-                    AllUsersForm allUsersForm = new AllUsersForm(answerFromServer[1]);
-                    allUsersForm.mainWindow = this;
-                    allUsersForm.Show();
+
                     break;
                 default:
                     break;
@@ -142,12 +133,23 @@ namespace WorkClient
         private void ReadFile(object sender, RoutedEventArgs e)
         {
             string nameFile = fileList.SelectedItem.ToString();
-            sendMessageToServer("readFiles/" + nameFile);
+
+            ParametrsClass parametrsClass = new ParametrsClass();
+            parametrsClass.fileName = nameFile;
+            parametrsClass.operation = "readFile";
+            parametrsClass.userName = userName;
+
+            sendMessageToServer(JsonEncode(parametrsClass));
         }
         private void EditFile(object sender, RoutedEventArgs e)
         {
             string nameFile = fileList.SelectedItem.ToString();
-            sendMessageToServer("editFiles/" + nameFile);
+            ParametrsClass parametrsClass = new ParametrsClass();
+            parametrsClass.fileName = nameFile;
+            parametrsClass.operation = "readFileForEdit";
+            parametrsClass.userName = userName;
+
+            sendMessageToServer(JsonEncode(parametrsClass));
         }
         private void DeleteFile(object sender, RoutedEventArgs e)
         {
@@ -165,6 +167,21 @@ namespace WorkClient
         {
             sendMessageToServer("checkUsers/");
         }
+
+        //Метод для создания запроса json
+        public string JsonEncode(ParametrsClass parametrsClass) {
+            return JsonConvert.SerializeObject(parametrsClass);
+        }
+        public class ParametrsClass {
+            public string operation = null;
+            public string userName = null;
+            public string userPass = null;
+            public string fileName = null;
+            public string fileBody = null;
+            public string answer = null;
+            public string authentication = null;
+        }
+
     }
 }
 
